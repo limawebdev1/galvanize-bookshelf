@@ -7,7 +7,6 @@ module.exports = {
   },
   test: {
     client:'pg',
-    connection:'postgres://localhost/bookshelf_test'
-  },
-  production: {}
+    connection:'postgres://localhost/bookshelf_dev'
+  }
 };
