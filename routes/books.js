@@ -53,43 +53,4 @@ router.delete('/:id', (req, res) => {
     res.send(humps.camelizeKeys(book[0]));
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-// YOUR CODE HERE
-// router.get('/', function(_req, res) {
-//  knex('books').orderBy('title').then((books) => {
-//   res.send(humps.camelizeKeys(books));
-//  });
-// });
-//
-// router.get('/:id', function(req, res) {
-//  knex('books').where('books.id', req.params.id).first().then((books) => {
-//   res.send(humps.camelizeKeys(books));
-//  });
-// });
-//
-// router.post('/', function(req, res) {
-//  console.log(typeof req.body.title);
-//  knex('books')
-//   .returning(['id', 'author', 'cover_url', 'description', 'genre', 'title'])
-//   .insert({
-//    author: req.body.author,
-//    cover_url: req.body.coverUrl,
-//    description: req.body.description,
-//    genre: req.body.genre,
-//    title: req.body.title
-//  }).then((obj) => {
-//    console.log(JSON.stringify(humps.camelizeKeys(obj[0])));
-//    res.send(JSON.stringify(humps.camelizeKeys(obj[0])));
-//   });
-// });
 module.exports = router;
