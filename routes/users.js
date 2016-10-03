@@ -15,6 +15,7 @@ router.post('/', (req, res) => {
       'email': req.body.email,
       'hashed_password': bcrypt.hashSync(req.body.password,8)
   }).then((user) => {
+    res.cookie(humps.camelizeKeys(user[0]));
     res.send(humps.camelizeKeys(user[0]));
   });
 });
