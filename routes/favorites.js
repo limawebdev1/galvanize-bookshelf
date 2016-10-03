@@ -21,7 +21,7 @@ const authorize = function(req, res, next){
 router.get('/', authorize, (req, res) => {
   knex('favorites')
   .innerJoin('books', 'favorites.book_id', 'books.id')
-  .where('favorites.user_id', 1)
+  .where('favorites.user_id', req.session.userInfo.id)
   .then((favorites) => {
     var total = [];
     for(var i = 0; i < favorites.length; i++){
@@ -45,6 +45,7 @@ router.get('/', authorize, (req, res) => {
 router.get('/:id', authorize, (req, res) => {
   knex('favorites')
   .where('book_id', req.query.bookId)
+  .where('user_id', req.session.userInfo.id)
   .then((favorites) => {
     if(favorites.length === 0){
       res.send(false);
@@ -58,7 +59,7 @@ router.post('/', authorize, (req, res) => {
   knex('favorites')
   .returning(['id', 'book_id', 'user_id'])
   .insert({
-    'user_id': 1,
+    'user_id': req.session.userInfo.id,
     'book_id': req.body.bookId
   }).then((favorite) => {
     res.send(humps.camelizeKeys(favorite[0]));
@@ -69,6 +70,7 @@ router.delete('/', authorize, (req, res) => {
   knex('favorites')
   .returning(['book_id', 'user_id'])
   .where('book_id', req.body.bookId)
+  .where('user_id', req.session.userInfo.id)
   .del().then((favorite) => {
     res.json(humps.camelizeKeys(favorite[0]));
   })

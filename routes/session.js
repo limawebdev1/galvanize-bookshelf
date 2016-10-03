@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
   if(req.session.userInfo !== undefined){
     res.send(true);
   }else{
+    console.log('no session');
     res.send(false);
   }
 });

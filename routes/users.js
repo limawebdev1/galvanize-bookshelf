@@ -5,6 +5,7 @@ const router = express.Router();
 const knex = require('../knex');
 const humps = require('humps');
 const bcrypt = require('bcrypt');
+var cookieSession = require('cookie-session');
 
 router.post('/', (req, res) => {
   knex('users')
@@ -15,7 +16,7 @@ router.post('/', (req, res) => {
       'email': req.body.email,
       'hashed_password': bcrypt.hashSync(req.body.password,8)
   }).then((user) => {
-    res.cookie(humps.camelizeKeys(user[0]));
+    req.session.userInfo = user[0];
     res.send(humps.camelizeKeys(user[0]));
   });
 });
